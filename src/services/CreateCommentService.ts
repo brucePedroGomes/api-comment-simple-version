@@ -1,25 +1,26 @@
+import { getRepository } from 'typeorm';
 import Comments from '../models/Comments';
-import CommentsRepository from '../repositories/CommentsRepository';
-import AppError from '../erros/AppError';
 
-interface IRequest {
-    title: string;
-    comment: string;
-}
+import AppError from '../erros/AppError';
+import ICreateCommentsDTO from '../DTOS/ICreateCommentsDTO';
 
 class CreateCommentService {
-    private commentsRepository: CommentsRepository;
+    public async execute({
+        title,
+        comment,
+    }: ICreateCommentsDTO): Promise<Comments> {
+        const commentsRepository = getRepository(Comments);
 
-    constructor(commentsRepository: CommentsRepository) {
-        this.commentsRepository = commentsRepository;
-    }
-
-    public execute({ title, comment }: IRequest): Comments {
         if (!comment || !title) {
             throw new AppError('comment and title are required', 411);
         }
 
-        const comments = this.commentsRepository.create({ title, comment });
+        const comments = commentsRepository.create({
+            title,
+            comment,
+        });
+
+        await commentsRepository.save(comments);
 
         return comments;
     }

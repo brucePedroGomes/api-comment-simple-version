@@ -1,21 +1,18 @@
 import { Router } from 'express';
+import { getRepository } from 'typeorm';
 
-import CommentsRepository from '../repositories/CommentsRepository';
+import Comments from '../models/Comments';
 import CreateCommentService from '../services/CreateCommentService';
 
 const commentsRouter = Router();
 
-const commentsRepository = new CommentsRepository();
-
-commentsRouter.post('/', (req, res) => {
+commentsRouter.post('/', async (req, res) => {
     try {
         const { title, comment } = req.body;
 
-        const createCommentService = new CreateCommentService(
-            commentsRepository,
-        );
+        const createCommentService = new CreateCommentService();
 
-        const comments = createCommentService.execute({ title, comment });
+        const comments = await createCommentService.execute({ title, comment });
 
         res.json(comments);
     } catch (error) {
@@ -23,8 +20,9 @@ commentsRouter.post('/', (req, res) => {
     }
 });
 
-commentsRouter.get('/', (_, res) => {
-    const comments = commentsRepository.all();
+commentsRouter.get('/', async (_, res) => {
+    const commentsRepository = getRepository(Comments);
+    const comments = await commentsRepository.find();
 
     return res.json(comments);
 });
