@@ -1,20 +1,22 @@
-
-import Comments from '../models/Comments';
-
+import Comments from "../models/Comments";
 
 class CommentsRepository {
     private comments: Comments[];
 
     constructor() {
-      this.comments = [];
+        this.comments = [];
     }
 
-    public create(title:string, comment:string): Comments {
-      const comments = new Comments(title, comment);
+    public create(title: string, comment: string) {
+        const comments = new Comments(title, comment);
 
-      this.comments.push(comments);
+        this.comments.push(comments);
 
-      return comments;
+        return comments;
+    }
+
+    public all() {
+        return this.comments;
     }
 }
 

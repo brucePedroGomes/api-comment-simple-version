@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import CommentsRepository from '../repositories/CommentsRepository';
 
+const commentsRouter = Router();
+
 const commentsRepository = new CommentsRepository();
 
-const commentsRouter = Router();
 
 commentsRouter.post('/', (req, res) => {
   const { title, comment } = req.body;
@@ -11,6 +12,12 @@ commentsRouter.post('/', (req, res) => {
   const comments = commentsRepository.create(title, comment);
 
   res.json(comments);
+});
+
+commentsRouter.get('/', (_, res) => {
+  const comments = commentsRepository.all();
+
+  return res.json(comments);
 });
 
 
