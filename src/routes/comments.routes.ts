@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 
-import Comments from '../models/Comments';
+import Comment from '../models/Comment';
 import CreateCommentService from '../services/CreateCommentService';
 
 const commentsRouter = Router();
@@ -21,7 +21,7 @@ commentsRouter.post('/', async (req, res) => {
 });
 
 commentsRouter.get('/', async (_, res) => {
-    const commentsRepository = getRepository(Comments);
+    const commentsRepository = getRepository(Comment);
     const comments = await commentsRepository.find();
 
     return res.json(comments);

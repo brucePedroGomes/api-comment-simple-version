@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import Comments from '../models/Comments';
+import Comment from '../models/Comment';
 
 import AppError from '../erros/AppError';
 import ICreateCommentsDTO from '../DTOS/ICreateCommentsDTO';
@@ -8,8 +8,8 @@ class CreateCommentService {
     public async execute({
         title,
         comment,
-    }: ICreateCommentsDTO): Promise<Comments> {
-        const commentsRepository = getRepository(Comments);
+    }: ICreateCommentsDTO): Promise<Comment> {
+        const commentsRepository = getRepository(Comment);
 
         if (!comment || !title) {
             throw new AppError('comment and title are required', 411);
