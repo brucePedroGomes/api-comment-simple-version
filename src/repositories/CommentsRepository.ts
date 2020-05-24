@@ -1,4 +1,5 @@
-import Comments from "../models/Comments";
+import Comments from '../models/Comments';
+import ICreateCommentsDTO from '../DTOS/ICreateCommentsDTO';
 
 class CommentsRepository {
     private comments: Comments[];
@@ -7,15 +8,15 @@ class CommentsRepository {
         this.comments = [];
     }
 
-    public create(title: string, comment: string) {
-        const comments = new Comments(title, comment);
+    public create({ title, comment }: ICreateCommentsDTO): Comments {
+        const comments = new Comments({ comment, title });
 
         this.comments.push(comments);
 
         return comments;
     }
 
-    public all() {
+    public all(): Comments[] {
         return this.comments;
     }
 }
