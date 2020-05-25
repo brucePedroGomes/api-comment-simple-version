@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import authConfig from '../config/auth';
 
+import authConfig from '../config/auth';
 import User from '../models/User';
 import AppError from '../erros/AppError';
 
@@ -19,6 +19,7 @@ interface IResponse {
 class CreateSessionsService {
     public async execute({ email, password }: IRequest): Promise<IResponse> {
         const userRepository = getRepository(User);
+
         const user = await userRepository.findOne({
             where: { email },
         });

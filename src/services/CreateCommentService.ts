@@ -1,4 +1,5 @@
 import { getRepository } from 'typeorm';
+
 import Comment from '../models/Comment';
 import User from '../models/User';
 import AppError from '../erros/AppError';
@@ -17,7 +18,7 @@ class CreateCommentService {
         const user = await userRepository.findOne(user_id);
 
         if (!user) {
-            throw new AppError('User id does not exist');
+            throw new AppError('User does not exist');
         }
 
         const comments = commentsRepository.create({

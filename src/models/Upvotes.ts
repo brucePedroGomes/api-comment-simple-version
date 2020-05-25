@@ -6,14 +6,13 @@ import {
     UpdateDateColumn,
     ManyToOne,
     JoinColumn,
-    OneToMany,
 } from 'typeorm';
 
 import User from './User';
-import Upvotes from './Upvotes';
+import Comment from './Comment';
 
-@Entity('comments')
-class Comments {
+@Entity('upvotes')
+class Users {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -24,14 +23,12 @@ class Comments {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @OneToMany(() => Upvotes, upvotes => upvotes.comment)
-    upvotes: Upvotes[];
+    @ManyToOne(() => Comment, comment => comment.upvotes)
+    @JoinColumn({ name: 'comment_id' })
+    comment: Comment;
 
     @Column()
-    title: string;
-
-    @Column('text')
-    comment: string;
+    comment_id: string;
 
     @CreateDateColumn()
     created_at: Date;
@@ -40,4 +37,4 @@ class Comments {
     updated_at: Date;
 }
 
-export default Comments;
+export default Users;
