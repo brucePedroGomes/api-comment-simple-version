@@ -1,5 +1,7 @@
 import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import authConfig from '../config/auth';
 
 import User from '../models/User';
 import AppError from '../erros/AppError';
@@ -11,6 +13,7 @@ interface IRequest {
 
 interface IResponse {
     user: User;
+    token: string;
 }
 
 class CreateSessionsService {
@@ -30,8 +33,16 @@ class CreateSessionsService {
             throw new AppError('Invalid email or password.', 401);
         }
 
+        const { secret, expiresIn } = authConfig.jwt;
+
+        const token = sign({}, secret, {
+            subject: user.id,
+            expiresIn,
+        });
+
         return {
             user,
+            token,
         };
     }
 }

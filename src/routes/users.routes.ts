@@ -4,19 +4,15 @@ import CreateUserService from '../services/CreateUsersService';
 const usersRouter = Router();
 
 usersRouter.post('/', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
-        const createUser = new CreateUserService();
+    const createUser = new CreateUserService();
 
-        const user = await createUser.execute({ name, email, password });
+    const user = await createUser.execute({ name, email, password });
 
-        delete user.password;
+    delete user.password;
 
-        res.json(user);
-    } catch (error) {
-        res.status(error.statusCode).json({ message: error.message });
-    }
+    res.json(user);
 });
 
 export default usersRouter;

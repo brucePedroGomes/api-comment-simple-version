@@ -3,21 +3,21 @@ import { getRepository } from 'typeorm';
 
 import Comment from '../models/Comment';
 import CreateCommentService from '../services/CreateCommentService';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const commentsRouter = Router();
 
-commentsRouter.post('/', async (req, res) => {
-    try {
-        const { title, comment, user_id } = req.body;
+commentsRouter.post('/', ensureAuthenticated, async (req, res) => {
+    const { title, comment } = req.body;
+    const createCommentService = new CreateCommentService();
 
-        const createCommentService = new CreateCommentService();
+    const comments = await createCommentService.execute({
+        title,
+        comment,
+        user_id: req.user.id,
+    });
 
-        const comments = await createCommentService.execute({ title, comment, user_id });
-
-        res.json(comments);
-    } catch (error) {
-        res.status(error.statusCode).json({ message: error.message });
-    }
+    return res.json(comments);
 });
 
 commentsRouter.get('/', async (_, res) => {
