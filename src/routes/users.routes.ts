@@ -15,7 +15,7 @@ usersRouter.post('/', async (req, res) => {
 
         res.json(user);
     } catch (error) {
-        res.status(error.statusCode).json(error.message);
+        res.status(error.statusCode).json({ message: error.message });
     }
 });
 

@@ -1,10 +1,14 @@
 import { getRepository } from 'typeorm';
 import Comment from '../models/Comment';
 
-import ICreateCommentsDTO from '../DTOS/ICreateCommentsDTO';
+interface IResponse {
+    title: string;
+    comment: string;
+    user_id: string;
+}
 
 class CreateCommentService {
-    public async execute({ title, comment, user_id }: ICreateCommentsDTO): Promise<Comment> {
+    public async execute({ title, comment, user_id }: IResponse): Promise<Comment> {
         const commentsRepository = getRepository(Comment);
 
         const comments = commentsRepository.create({
