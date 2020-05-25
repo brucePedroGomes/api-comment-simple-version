@@ -1,9 +1,4 @@
-import {
-    MigrationInterface,
-    QueryRunner,
-    Table,
-    TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm';
 
 export default class CreateComments1590358765699 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
@@ -34,12 +29,12 @@ export default class CreateComments1590358765699 implements MigrationInterface {
 
                     {
                         name: 'created_at',
-                        type: 'timestamp',
+                        type: 'timestamp with time zone',
                         default: 'now()',
                     },
                     {
                         name: 'updated_at',
-                        type: 'timestamp',
+                        type: 'timestamp with time zone',
                         default: 'now()',
                     },
                 ],

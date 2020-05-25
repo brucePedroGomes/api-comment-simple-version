@@ -8,11 +8,11 @@ const commentsRouter = Router();
 
 commentsRouter.post('/', async (req, res) => {
     try {
-        const { title, comment } = req.body;
+        const { title, comment, user_id } = req.body;
 
         const createCommentService = new CreateCommentService();
 
-        const comments = await createCommentService.execute({ title, comment });
+        const comments = await createCommentService.execute({ title, comment, user_id });
 
         res.json(comments);
     } catch (error) {
