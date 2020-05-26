@@ -29,7 +29,7 @@ class CreateUpvotesService {
         const findId = await upVotesRepository.findOne({ where: { user_id, comment_id } });
 
         if (findId) {
-            throw new AppError('only one vote per user');
+            throw new AppError('limited to one vote per user');
         }
 
         const register = upVotesRepository.create({ user_id, comment_id });

@@ -15,7 +15,7 @@ class CreateRemoveUpvoteservice {
         const voteFind = await upvotesRepository.findOne({ where: { comment_id, user_id } });
 
         if (!voteFind) {
-            throw new AppError('you do not have permission');
+            throw new AppError('You are not the owner of this vote');
         }
 
         await upvotesRepository.delete({ user_id });
