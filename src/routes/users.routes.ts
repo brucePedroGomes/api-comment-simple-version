@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CreateUserService from '../services/CreateUsersService';
+import CreateUserService from '../services/CreateUserService';
 
 const usersRouter = Router();
 

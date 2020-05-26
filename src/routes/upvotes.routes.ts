@@ -1,20 +1,32 @@
 import { Router } from 'express';
-import CreateUpvotesService from '../services/CreateUpvotesService';
+
+import CreateUpvoteService from '../services/CreateUpvoteService';
+import DeleteUpvoteService from '../services/DeleteUpvoteService';
+
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
-const upvotesRouter = Router();
+const UpvotesRouter = Router();
 
-upvotesRouter.post('/', ensureAuthenticated, async (req, res) => {
-    const upvotesService = new CreateUpvotesService();
-
+UpvotesRouter.post('/', ensureAuthenticated, async (req, res) => {
+    const UpvoteService = new CreateUpvoteService();
     const { comment_id } = req.body;
 
-    const upvotes = await upvotesService.execute({
+    const Upvotes = await UpvoteService.execute({
         comment_id,
         user_id: req.user.id,
     });
 
-    return res.json(upvotes);
+    return res.json(Upvotes);
 });
 
-export default upvotesRouter;
+UpvotesRouter.delete('/delete', ensureAuthenticated, async (req, res) => {
+    const UpvoteService = new DeleteUpvoteService();
+
+    const { comment_id } = req.body;
+
+    await UpvoteService.execute({ comment_id, user_id: req.user.id });
+
+    return res.status(200).json();
+});
+
+export default UpvotesRouter;

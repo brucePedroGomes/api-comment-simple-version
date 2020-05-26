@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import User from './User';
-import Upvotes from './Upvotes';
+import Upvote from './Upvote';
 
 @Entity('comments')
 class Comments {
@@ -24,8 +24,8 @@ class Comments {
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @OneToMany(() => Upvotes, upvotes => upvotes.comment)
-    upvotes: Upvotes[];
+    @OneToMany(() => Upvote, upvote => upvote.comment)
+    upvotes: Upvote[];
 
     @Column()
     title: string;
