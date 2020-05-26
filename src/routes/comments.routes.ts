@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import { getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
-import Comment from '../models/Comment';
-
-import CreateCommentService from '../services/CreateCommentService';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
+import CreateCommentService from '../services/CreateCommentService';
+import CommentsRepository from '../repositories/CommentsRepository';
 
 const commentsRouter = Router();
 
@@ -22,8 +21,9 @@ commentsRouter.post('/', ensureAuthenticated, async (req, res) => {
 });
 
 commentsRouter.get('/', async (_, res) => {
-    const commentsRepository = getRepository(Comment);
-    const comments = await commentsRepository.find({ relations: ['upvotes'] });
+    const commentsRepository = getCustomRepository(CommentsRepository);
+
+    const comments = await commentsRepository.fetchCommentsSortedByUpvotes();
 
     return res.json(comments);
 });
