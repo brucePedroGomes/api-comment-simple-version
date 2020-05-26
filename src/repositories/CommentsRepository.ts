@@ -6,7 +6,7 @@ class CommentsRepository extends Repository<Comment> {
     public async fetchCommentsSortedByUpvotes(): Promise<Comment[]> {
         const comments = await this.find({ relations: ['upvotes'] });
 
-        const CommentsSortedByRegistration = comments.sort((a, b) => {
+        const CommentsSortedByUpvotes = comments.sort((a, b) => {
             if (a.upvotes.length < b.upvotes.length) {
                 return 1;
             }
@@ -17,7 +17,7 @@ class CommentsRepository extends Repository<Comment> {
             return 0;
         });
 
-        return CommentsSortedByRegistration;
+        return CommentsSortedByUpvotes;
     }
 }
 
