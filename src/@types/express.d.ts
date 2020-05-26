@@ -5,9 +5,5 @@ declare namespace Express {
         user: {
             id: string;
         };
-
-        comments: {
-            id: string;
-        };
     }
 }
