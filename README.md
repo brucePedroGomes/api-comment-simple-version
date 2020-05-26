@@ -26,6 +26,7 @@ Esta aplicação foi desenolvida com as tecnologias abaixo:
 - [Typeorm](https://typeorm.io/#/)
 - [JWT-token](https://jwt.io/)
 - [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [uuid v4](https://github.com/thenativeweb/uuidv4/)
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [PostgreSQL](https://www.postgresql.org/)
 - [Eslint](https://eslint.org/)
@@ -46,6 +47,17 @@ $ git clone https://github.com/pedroleinar/nodejs-server-api-typescript-SpCommen
 $ cd nodejs-server-api-typescript-SpComments
 # Install dependencies
 $ yarn install
+# Create the instance of postgreSQL using docker
+$ sudo docker run --name spcomments_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
+# Create a image SpComments in docker
+# Connect with docker database containers
+# Once the services are running, run the migrations
+$ yarn typeorm migration:run
+# To finish, run the api service
+$ yarn dev:server
+# Well done, project is started!
 ```
 
+---
 
+Made with 💜 Pedro Gomes 👋 [See my linkedin](https://www.linkedin.com/in/pedroleinar/)
