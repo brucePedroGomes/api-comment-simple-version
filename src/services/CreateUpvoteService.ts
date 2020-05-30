@@ -9,17 +9,17 @@ interface IRequest {
 
 class CreateUpvotesService {
     public async execute({ user_id, comment_id }: IRequest): Promise<Upvote> {
-        const upVotesRepository = getRepository(Upvote);
+        const upvotesRepository = getRepository(Upvote);
 
-        const findId = await upVotesRepository.findOne({ where: { user_id, comment_id } });
+        const findId = await upvotesRepository.findOne({ where: { user_id, comment_id } });
 
         if (findId) {
             throw new AppError('limited to one vote per user');
         }
 
-        const register = upVotesRepository.create({ user_id, comment_id });
+        const register = upvotesRepository.create({ user_id, comment_id });
 
-        await upVotesRepository.save(register);
+        await upvotesRepository.save(register);
 
         return register;
     }
