@@ -12,13 +12,13 @@ class CreateRemoveUpvoteservice {
     public async execute({ user_id, comment_id }: IRequest): Promise<void> {
         const upvotesRepository = getRepository(Upvotes);
 
-        const voteFind = await upvotesRepository.findOne({ where: { comment_id, user_id } });
+        const upvotes = await upvotesRepository.findOne({ where: { comment_id, user_id } });
 
-        if (!voteFind) {
+        if (!upvotes) {
             throw new AppError('You are not the owner of this vote');
         }
 
-        await upvotesRepository.delete({ user_id });
+        await upvotesRepository.remove(upvotes);
     }
 }
 

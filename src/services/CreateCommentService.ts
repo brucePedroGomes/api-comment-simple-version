@@ -1,8 +1,6 @@
 import { getRepository } from 'typeorm';
 
 import Comment from '../models/Comment';
-import User from '../models/User';
-import AppError from '../erros/AppError';
 
 interface IRequest {
     title: string;
@@ -13,13 +11,6 @@ interface IRequest {
 class CreateCommentService {
     public async execute({ title, comment, user_id }: IRequest): Promise<Comment> {
         const commentsRepository = getRepository(Comment);
-        const userRepository = getRepository(User);
-
-        const user = await userRepository.findOne(user_id);
-
-        if (!user) {
-            throw new AppError('User does not exist');
-        }
 
         const comments = commentsRepository.create({
             title,
