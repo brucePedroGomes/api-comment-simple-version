@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
 import User from '../models/User';
-import AppError from '../erros/AppError';
+import AppError from '../errors/AppError';
 
 interface IRequest {
     name: string;

@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import Upvotes from '../models/Upvote';
-import AppError from '../erros/AppError';
+import AppError from '../errors/AppError';
 
 interface IRequest {
     user_id: string;
